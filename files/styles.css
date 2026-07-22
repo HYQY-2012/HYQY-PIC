@@ -1,0 +1,288 @@
+/* ========== 自定义右键菜单 - 完整动画版 ========== */
+.custom-image-menu {
+  position: fixed;
+  z-index: 999999;
+  min-width: 220px;
+  
+  /* 毛玻璃效果 */
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  
+  /* 边框光晕 */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  
+  /* 内阴影增加层次 */
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  
+  padding: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  color: #ffffff;
+  
+  /* 初始状态：完全隐藏 */
+  opacity: 0;
+  transform: translateY(-10px) scale(0.8);
+  transform-origin: top left;
+  pointer-events: none;
+  user-select: none;
+  
+  /* 过渡动画 */
+  transition: 
+    opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ========== 入场动画 ========== */
+.custom-image-menu.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  
+  /* 入场时可以加一点弹性 */
+  animation: menuEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes menuEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(3px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ========== 出场动画 ========== */
+.custom-image-menu.hide {
+  animation: menuExit 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes menuExit {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.75);
+  }
+}
+
+/* ========== 菜单项延迟入场 ========== */
+.custom-image-menu .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin: 3px 0;
+  border-radius: 12px;
+  cursor: pointer;
+  
+  background: rgba(255, 255, 255, 0);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 450;
+  letter-spacing: 0.3px;
+  
+  /* 菜单项初始隐藏 */
+  opacity: 0;
+  transform: translateX(-10px);
+  
+  transition: 
+    opacity 0.2s ease,
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  
+  position: relative;
+  overflow: hidden;
+}
+
+/* 菜单显示时，菜单项依次入场 */
+.custom-image-menu.show .menu-item {
+  animation: menuItemEnter 0.3s ease forwards;
+}
+
+.custom-image-menu.show .menu-item:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.custom-image-menu.show .menu-item:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.custom-image-menu.show .menu-item:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.custom-image-menu.show .menu-item:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+@keyframes menuItemEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 菜单项悬停效果 */
+.custom-image-menu .menu-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #ffffff;
+  transform: translateX(4px);
+  
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* 点击反馈 */
+.custom-image-menu .menu-item:active {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: scale(0.96) translateX(4px);
+  transition: all 0.08s ease;
+}
+
+/* SVG图标动画 */
+.custom-image-menu .menu-item svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: all 0.2s ease;
+}
+
+.custom-image-menu .menu-item:hover svg {
+  opacity: 1;
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+/* ========== 各功能按钮主题色 ========== */
+.custom-image-menu .copy-image-btn:hover {
+  background: rgba(139, 92, 246, 0.25);
+  box-shadow: 
+    0 4px 16px rgba(139, 92, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.custom-image-menu .copy-image-btn:hover svg {
+  color: #a78bfa;
+  filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.5));
+}
+
+.custom-image-menu .save-image-btn:hover {
+  background: rgba(16, 185, 129, 0.25);
+  box-shadow: 
+    0 4px 16px rgba(16, 185, 129, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.custom-image-menu .save-image-btn:hover svg {
+  color: #34d399;
+  filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.5));
+}
+
+.custom-image-menu .copy-url-btn:hover {
+  background: rgba(245, 158, 11, 0.25);
+  box-shadow: 
+    0 4px 16px rgba(245, 158, 11, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.custom-image-menu .copy-url-btn:hover svg {
+  color: #fbbf24;
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
+}
+
+.custom-image-menu .open-image-btn:hover {
+  background: rgba(59, 130, 246, 0.25);
+  box-shadow: 
+    0 4px 16px rgba(59, 130, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.custom-image-menu .open-image-btn:hover svg {
+  color: #60a5fa;
+  filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.5));
+}
+
+/* ========== Toast提示动画 ========== */
+.image-menu-toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  z-index: 1000000;
+  
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  
+  color: #ffffff;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: 0.3px;
+  
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
+  opacity: 0;
+  transform: translateX(-50%) translateY(20px) scale(0.9);
+  transition: 
+    opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.image-menu-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* ========== 浅色模式适配 ========== */
+@media (prefers-color-scheme: light) {
+  .custom-image-menu {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: #1a1a1a;
+  }
+  
+  .custom-image-menu .menu-item {
+    color: rgba(0, 0, 0, 0.75);
+  }
+  
+  .custom-image-menu .menu-item:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: #000000;
+  }
+  
+  .image-menu-toast {
+    background: rgba(255, 255, 255, 0.8);
+    color: #1a1a1a;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+}
