@@ -1,6 +1,6 @@
 # CN:hyqypic 浏览器插件
 
-[ENGLISH](#en:hyqypic-browser-extension)
+[ENGLISH](#en-hyqypic-browser-extension)
 
 > 一款开源、轻量的浏览器插件，核心旨在解决网站图片难以保存，并且其他插件难以使用或需要支付或有广告的问题。
 
